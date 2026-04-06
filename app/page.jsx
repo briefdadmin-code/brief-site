@@ -6,7 +6,13 @@ import { useState, useEffect } from "react";
 // Replace this with your actual Calendly link
 const CALENDLY_URL = "https://calendly.com/briefdadmin/30min";
 
-const openCalendly = () => window.open(CALENDLY_URL, "_blank", "noopener");
+const openCalendly = () => {
+  if (window.Calendly) {
+    window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+  } else {
+    window.open(CALENDLY_URL, "_blank", "noopener");
+  }
+};
 
 /* ── Design tokens ── */
 const C = {
@@ -208,6 +214,17 @@ export default function BriefdOffer() {
     const onScroll = () => setShowSticky(window.scrollY > 600);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
   }, []);
 
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
