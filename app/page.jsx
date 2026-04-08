@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 /* ── Config ── */
 // Replace this with your actual Calendly link
-const CALENDLY_URL = "https://calendly.com/briefdadmin/30min";
+const CALENDLY_URL = "https://calendly.com/team-brieffd/qualification-call";
 
 const openCalendly = () => {
   if (window.Calendly) {
